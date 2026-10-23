@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: board
+  profiles:
+    # 프로파일을 지정하지 않고 실행하면(IntelliJ 실행, bootRun) local로 동작한다.
+    default: local
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+  flyway:
+    locations: classpath:db/migration
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+  mvc:
+    problemdetails:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

@@ -1,0 +1,6 @@
+# 기본값을 두지 않는다. 값은 docker-compose.yml이 .env에서 주입한다.
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}

@@ -1,0 +1,14 @@
+# 로컬 전용 기본값은 .env.example과 일치시킨다.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:${DB_PORT:5432}/${DB_NAME:board}
+    username: ${DB_USERNAME:board}
+    password: ${DB_PASSWORD:board}
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
