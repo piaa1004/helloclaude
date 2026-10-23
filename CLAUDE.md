@@ -13,7 +13,7 @@
 | 언어 | Java 21 (LTS) |
 | 프레임워크 | Spring Boot 4.x (Spring Framework 7, Jakarta EE 11) |
 | 영속성 | Spring Data JPA (Hibernate 7) |
-| 데이터베이스 | PostgreSQL 17 |
+| 데이터베이스 | PostgreSQL 18 |
 | DB 마이그레이션 | Flyway |
 | 빌드 도구 | Gradle (Kotlin DSL, Wrapper 사용) |
 | 테스트 | JUnit 6 (Jupiter), Spring Boot Test, Mockito, Testcontainers 2.x (PostgreSQL) |
@@ -131,7 +131,12 @@ docker compose down -v       # 볼륨(데이터)까지 삭제
 ### docker-compose.yml
 
 - `db`
-  - `postgres:17`, named volume으로 데이터 영속화
+  - `postgres:18`, named volume으로 데이터 영속화
+  - **볼륨 마운트 경로는 `/var/lib/postgresql`** 이다 (18부터 PGDATA가 `/var/lib/postgresql/18/docker`로 바뀌었다). 17 이하처럼 `/var/lib/postgresql/data`에 마운트하면 컨테이너가 기동에 실패한다.
+    ```yaml
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    ```
   - healthcheck는 사용자/DB를 명시한다 (생략 시 `role "root" does not exist` 로그가 반복된다):
     ```yaml
     healthcheck:
@@ -236,7 +241,7 @@ spring:
 
 - Repository/통합 테스트는 H2가 아닌 **Testcontainers PostgreSQL**로 수행한다.
   - 컨테이너는 `test/.../support/`의 `@TestConfiguration`에서 `@ServiceConnection` Bean으로 한 번만 정의하고 재사용한다 (테스트 클래스마다 컨테이너를 새로 띄우지 않는다).
-  - 이미지 태그는 운영과 동일하게 `postgres:17`.
+  - 이미지 태그는 운영과 동일하게 `postgres:18`.
 - Service 단위 테스트는 Spring 컨텍스트 없이 Mockito(`@ExtendWith(MockitoExtension.class)`)로 의존성을 대체한다.
 - Controller 테스트는 `@WebMvcTest` + `MockMvcTester`를 사용하고, Service는 `@MockitoBean`으로 대체한다.
 - 새로운 기능을 추가할 때는 관련 테스트를 함께 작성하고, 커밋 전 `./gradlew build`가 통과해야 한다.
