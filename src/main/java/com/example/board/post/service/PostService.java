@@ -54,7 +54,8 @@ public class PostService {
 		postRepository.delete(findPost(postId));
 	}
 
-	private Post findPost(Long postId) {
+	// 다른 도메인(comment 등)이 게시글 엔티티를 참조할 때 사용한다.
+	public Post findPost(Long postId) {
 		return postRepository.findById(postId)
 				.orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
 	}
