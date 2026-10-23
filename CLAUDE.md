@@ -18,6 +18,7 @@
 | 빌드 도구 | Gradle (Kotlin DSL, Wrapper 사용) |
 | 테스트 | JUnit 6 (Jupiter), Spring Boot Test, Mockito, Testcontainers 2.x (PostgreSQL) |
 | 실행 환경 | Docker / Docker Compose |
+| IDE | IntelliJ IDEA |
 
 ### Spring Boot 4 주의사항 — 예전 예제 코드를 그대로 가져오지 않는다
 
